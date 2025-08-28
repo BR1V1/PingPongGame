@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="developer-logo">
+                <div class="logo-text">
+                    <span class="briv">BRIV</span><span class="dash">-</span><span class="dev">DEV</span>
+                </div>
+                <div class="logo-subtitle">Game Development</div>
+            </div>
+            <div class="loading-animation">
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <p class="loading-text">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="uk">🇺🇦 Українська</option>
+                <option value="be">🇧🇾 Беларуская</option>
+                <option value="kk">🇰🇿 Қазақша</option>
+                <option value="uz">🇺🇿 Oʻzbekcha</option>
+                <option value="ky">🇰🇬 Кыргызча</option>
+                <option value="tg">🇹🇯 Тоҷикӣ</option>
+                <option value="tk">🇹🇲 Türkmençe</option>
+                <option value="hy">🇦🇲 Հայերեն</option>
+                <option value="az">🇦🇿 Azərbaycanca</option>
+                <option value="ka">🇬🇪 ქართული</option>
+                <option value="ro">🇲🇩 Română</option>
+            </select>
+        </div>
+        <canvas id="gameCanvas" width="640" height="360"></canvas>
+        
+        <!-- Mobile Control Buttons -->
+        <div class="mobile-controls">
+            <button id="startButton" class="mobile-btn start-btn">START</button>
+            <button id="pauseButton" class="mobile-btn pause-btn" style="display: none;">PAUSE</button>
+        </div>
+        
+        <!-- Touch Area for Paddle Control -->
+        <div class="touch-instructions mobile-only">
+            <p>Touch and drag to move paddle</p>
+        </div>
+        
+        <div class="instructions" id="instructions">
+            <h2>PONG GAME</h2>
+            <p>Press SPACE to start the game</p>
+            <p>Move your mouse to control the paddle</p>
+            <p>Press ESC to pause during game</p>
+            <div class="mobile-instructions">
+                <p>Tap START to begin</p>
+                <p>Touch and drag to control paddle</p>
+            </div>
+        </div>
+        <div class="game-over" id="gameOver" style="display: none;">
+            <h2>GAME OVER</h2>
+            <p>Press SPACE to play again</p>
+            <div class="mobile-instructions">
+                <p>Tap START to play again</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio elements for sound effects -->
+    <audio id="hitSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIcBjiS1/LLeisFJHfH8N2QQAoUXrTp66hVFA==" type="audio/wav">
+    </audio>
+    <audio id="gameOverSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQEAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAEAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA" type="audio/wav">
+    </audio>
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="data:audio/wav;base64,UklGRiQEAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAEAAA=" type="audio/wav">
+    </audio>
+
+    <script src="game.js"></script>
+</body>
+</html>
